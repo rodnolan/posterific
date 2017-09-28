@@ -12,8 +12,7 @@ export default class PosterListScreen extends React.Component {
     super(props);
     this.state = {
       listMode: false,
-      posters: [],
-      user: {}
+      posters: []
     };
   }
 
@@ -87,7 +86,6 @@ export default class PosterListScreen extends React.Component {
             <Title style={{ fontSize: 15 }}>Your Saved Posters</Title>
           </Body>
           <Right>
-            {/* { this.renderUserIcon() } */}
             <Button
               transparent
               onPress={() => {
