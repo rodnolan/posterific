@@ -4,6 +4,7 @@ import { Image, View, StyleSheet, Text, ToastAndroid, Dimensions } from 'react-n
 import { Container, Content, Header, Left, Button, Icon, Body, Title } from 'native-base';
 import PosterModel from '../Model/PosterModel';
 import AccountKit from 'react-native-facebook-account-kit';
+import NativeBaseAccountKitLoginButton from './NativeBaseAccountKitLoginButton';
 let { height, width } = Dimensions.get("window");
 
 export default class CheckoutScreen extends React.Component {
@@ -26,6 +27,12 @@ export default class CheckoutScreen extends React.Component {
   }
 
   componentWillMount() {
+    AccountKit.configure({
+      countryWhitelist: ["KE", "ID", "US", "CA"],
+      defaultCountry: "KE",
+      initialPhoneCountryPrefix: '+254'
+    });
+
     AccountKit.getCurrentAccessToken()
       .then((token) => {
         if (token) {
@@ -102,6 +109,15 @@ export default class CheckoutScreen extends React.Component {
           <Text style={[styles.btnText]}>Login with Email </Text>
           <Icon name="md-mail" />
         </Button>
+        <NativeBaseAccountKitLoginButton
+          style={{ margin: 10 }}
+          type="phone"
+          onLogin={(token) => this.onLoginSuccess(token)}
+          onError={(e) => this.onLoginError(e)}
+        >
+          <Text style={styles.btnText}>Login with SMS </Text>
+          <Icon name="md-phone-portrait" />
+        </NativeBaseAccountKitLoginButton>
       </View>
     );
   }
@@ -136,10 +152,10 @@ export default class CheckoutScreen extends React.Component {
   }
 
   renderUserDetails() {
-    const { id, email } = this.state.loggedAccount;
+    const { id, email, phoneNumber } = this.state.loggedAccount;
     return (
       <View>
-        <Text style={styles.akUser}>Account Kit User: {id} {email}</Text>
+        <Text style={styles.akUser}>Account Kit User: {id} {email} { phoneNumber ? `${phoneNumber.countryCode} ${phoneNumber.number}` : null }</Text>
         <Button
           info
           iconRight
