@@ -4,6 +4,8 @@ import PhotoGrid from 'react-native-photo-grid';
 import { Container, Content, Header, Left, Right, Button, Text, Icon, Body, Title, Fab, View, List, ListItem, Thumbnail } from 'native-base';
 import storage from '../Model/PosterificStorage';
 import PosterModel from '../Model/PosterModel';
+import { AppEventsLogger } from 'react-native-fbsdk';
+
 var { height } = Dimensions.get('window');
 
 export default class PosterListScreen extends React.Component {
@@ -53,6 +55,7 @@ export default class PosterListScreen extends React.Component {
     let indexOfPosterToRemove = posters.findIndex(poster => poster.id === posterToRemove.id);
     if (indexOfPosterToRemove !== -1) {
       posters.splice(indexOfPosterToRemove, 1);
+      AppEventsLogger.logEvent("posterDeleted");
     } else {
       console.log("something is broken, can't delete");
     }
@@ -89,6 +92,7 @@ export default class PosterListScreen extends React.Component {
             <Button
               transparent
               onPress={() => {
+                AppEventsLogger.logEvent('toggleView', {'mode': this.state.listMode ? 'list' : 'grid' });
                 this.setState({ listMode: !this.state.listMode });
               }}
             >
