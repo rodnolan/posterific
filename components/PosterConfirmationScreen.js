@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Image, View, StyleSheet, Text, ToastAndroid, Dimensions } from 'react-native';
 import { Container, Content, Header, Left, Button, Icon, Body, Title } from 'native-base';
 import PosterModel from '../Model/PosterModel';
+import { AppEventsLogger } from 'react-native-fbsdk';
 
 let { height, width } = Dimensions.get("window");
 
@@ -75,10 +76,20 @@ export default class PosterConfirmationScreen extends React.Component {
                 style={{ margin: 10 }}
                 onPress={() => {
                   let poster = this.state.poster;
+                  let totalCartPrice = 3550;
+                  let params = {
+                    "fb_content_id" : poster.id,
+                    "fb_content_type" : poster.isPortrait ? "portrait" : "landscape",
+                    "fb_num_items" : "1",
+                    "fb_payment_info_available" : "0",
+                    "fb_currency" : "KES",
+                    "fb_description" : poster.caption
+                  };
+                  AppEventsLogger.logEvent("fb_mobile_initiated_checkout", totalCartPrice, params);
                   this.props.navigator.push({
                     name: 'Checkout',
                     passProps: {
-                      poster: this.state.poster
+                      poster: poster
                     }
                   })
                 }}

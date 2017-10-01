@@ -41,6 +41,12 @@ export default class PosterListScreen extends React.Component {
   }
 
   navigateToConfirmation = (poster) => {
+    let params = {
+      "fb_content_id" : poster.id,
+      "fb_content_type" : poster.isPortrait ? 'portrait' : 'landscape',
+      "fb_description" : poster.caption
+    };
+    AppEventsLogger.logEvent("fb_mobile_add_to_cart", params);
     this.props.navigator.push({
       name: 'PosterConfirmation',
       passProps: {
