@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet, Dimensions } from 'react-native';
 import storage from '../Model/PosterificStorage';
+import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import UserModel from '../Model/UserModel';
 
 //set the default dimension
 let { height, width } = Dimensions.get("window");
@@ -19,6 +21,47 @@ export default class HomeScreen extends React.Component {
       >
         <Text style={styles.mainTitle}>Posterific!</Text>
         <Text style={styles.subTitle}>Poster making made easy.</Text>
+
+        <LoginButton
+          onLoginFinished={(error, result) => {
+            if (error) {
+              alert("Login failed with error: " + error.toString());
+            } else if (result.isCancelled) {
+              alert("Login was cancelled");
+              } else {
+                let tmpThis = this;
+                AccessToken.getCurrentAccessToken().then( (data) => {
+                if (data == null) {
+                  console.warn("no access token available");
+                } else {
+                  console.log("got access token: " + data.accessToken);
+                  console.log("permissions: " + data.permissions);
+                  let graphPath = '/me?fields=id,first_name,picture{url}';
+                  let requestHandler = function (error, result) {
+                    if (!error) {
+                      console.log(result.id + ', ' + result.first_name + ', ' + result.picture.data.url);
+                      let user = new UserModel(result.id, result.first_name, result.picture.data.url);
+                      storage.save({
+                        key: 'user',
+                        data: {user: user}
+                      });
+                      tmpThis.props.navigator.push({
+                        name: 'PosterList'
+                      });
+                    }
+                  };
+                  let userInfoRequest = new GraphRequest(graphPath, null, requestHandler);
+                  new GraphRequestManager().addRequest(userInfoRequest).start();
+                }
+              });
+            }
+          }}
+          onLogoutFinished={() => {
+            storage.remove({key: 'user'});
+            this.props.navigator.popToTop();
+          }}
+        />
+
         <TouchableOpacity
           onPress={() => { this.props.navigator.push({name: 'PosterList'}) }}
         >
