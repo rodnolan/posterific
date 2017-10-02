@@ -6,6 +6,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new FBSDKPackage(mCallbackManager),
+            new RNAccountKitPackage(),
             new RNViewShotPackage(),
             new PickerPackage()
       );

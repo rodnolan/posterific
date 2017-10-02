@@ -3072,6 +3072,11 @@ react-native-easy-grid@0.1.15:
 react-native-fbsdk@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-0.6.1.tgz#268bdbda5a16f5341ca43e3fa1beb88801e35a92"
+react-native-facebook-account-kit@0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-facebook-account-kit/-/react-native-facebook-account-kit-0.8.0.tgz#6d291f5baa0ef6d085cdeb926fe2ed5866d49562"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-image-crop-picker@0.16.1:
   version "0.16.1"
