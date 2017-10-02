@@ -12,7 +12,8 @@ export default class PosterListScreen extends React.Component {
     super(props);
     this.state = {
       listMode: false,
-      posters: []
+      posters: [],
+      user: {}
     };
   }
 
@@ -26,6 +27,17 @@ export default class PosterListScreen extends React.Component {
       tmpThis.setState({ posters: posters });
     }).catch(err => {
       console.log("no posters found: " + err.message);
+    });
+
+    // load user data from storage
+    storage.load({
+      key: 'user'
+    }).then(data => {
+      let user = data.user;
+      console.log("user found: " + user.firstName);
+      tmpThis.setState({ user: user });
+    }).catch(err => {
+      console.log("no user found: " + err.message);
     });
   };
 
@@ -86,6 +98,7 @@ export default class PosterListScreen extends React.Component {
             <Title style={{ fontSize: 15 }}>Your Saved Posters</Title>
           </Body>
           <Right>
+            { this.renderUserIcon() }
             <Button
               transparent
               onPress={() => {
@@ -118,6 +131,18 @@ export default class PosterListScreen extends React.Component {
         </Fab>
       </Container>
     );
+  }
+
+  renderUserIcon = () => {
+    if (this.state.user.profileImageUri === undefined) {
+      return (
+        <Icon name={'md-person'} />
+      )
+    } else {
+      return (
+        <Thumbnail source={{ uri: this.state.user.profileImageUri }} />
+      )
+    }
   }
 
   renderPosters = () => {
