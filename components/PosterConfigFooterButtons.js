@@ -6,11 +6,13 @@ import { Button, Text, Icon, View } from 'native-base';
 export default class PosterConfigFooterButtons extends React.Component {
 
   static propTypes = {
-    pressHandler: PropTypes.func.isRequired
+    pressHandler: PropTypes.func.isRequired,
+    openMessenger: PropTypes.func.isRequired
   };
 
   static defaultProps = {
     pressHandler: null,
+    openMessenger: null
   };
 
   render() {
@@ -34,6 +36,7 @@ export default class PosterConfigFooterButtons extends React.Component {
         <TouchableOpacity onPress={
           () => {
             console.log('messenger button pressed');
+            this.props.openMessenger();
           }
         }>
           <Image source={require('./../assets/images/facebook-messenger.png')} />
