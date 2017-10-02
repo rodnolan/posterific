@@ -7,6 +7,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.underscope.react.fbak.RNAccountKitPackage;
+import com.facebook.appevents.AppEventsLogger;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -53,5 +54,6 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     FacebookSdk.sdkInitialize(getApplicationContext());
+    AppEventsLogger.activateApp(this);
   }
 }
