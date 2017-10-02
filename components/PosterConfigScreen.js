@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, Linking } from 'react-native';
+import { Image } from 'react-native';
 import PosterConfigButtonBar from './PosterConfigButtonBar.js';
 import PosterConfigBody from './PosterConfigBody.js';
 import PosterConfigFooterButtons from './PosterConfigFooterButtons.js';
@@ -10,8 +10,6 @@ import ModalTextEditor from './ModalTextEditor';
 import PosterModel from '../Model/PosterModel';
 import { captureRef } from "react-native-view-shot";
 import storage from '../Model/PosterificStorage';
-
-const messengerUrl = 'http://m.me/RodsPosterificReactNativeApp';
 
 export default class PosterConfigScreen extends React.Component {
 
@@ -130,16 +128,6 @@ export default class PosterConfigScreen extends React.Component {
     })
   }
 
-  openMessenger = () => {
-    Linking.canOpenURL(messengerUrl).then(supported => {
-      if (supported) {
-        Linking.openURL(messengerUrl);
-      } else {
-        console.log('Don\'t know how to open URI: ' + messengerUrl);
-      }
-    });
-  }
-
   redirectOnSave = () => {
     this.props.navigator.push({
       name: 'PosterList'
@@ -196,9 +184,7 @@ export default class PosterConfigScreen extends React.Component {
           </Content>
           <PosterConfigFooterButtons
             pressHandler={this.pressHandler}
-            openMessenger={this.openMessenger}
           />
-
         </Image>
       </Container>
     );
