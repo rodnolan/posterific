@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java b/node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java
+index af2c3a9..e862659 100644
+--- a/node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java
++++ b/node_modules/react-native-fbsdk/android/src/main/java/com/facebook/reactnative/androidsdk/FBSDKPackage.java
+@@ -58,7 +58,8 @@ public class FBSDKPackage implements ReactPackage {
+         );
+     }
+ 
+-    @Override
++    // @Override
++    // removed in rn 0.47.0
+     public List<Class<? extends JavaScriptModule>> createJSModules() {
+         return Collections.emptyList();
+     }
